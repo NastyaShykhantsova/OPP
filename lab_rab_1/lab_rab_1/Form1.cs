@@ -237,11 +237,52 @@ namespace lab_rab_1
             Graphics g = Graphics.FromImage(pb.Image);
         }
 
+        public void SaveInFile()
+        {
+            ImageConverter converter = new ImageConverter();
+            myIm.image_byte = (byte[])converter.ConvertTo(myIm.bmp, typeof(byte[]));
+            XmlSerializer holst = new XmlSerializer(typeof(byte[]));
+            Stream writer = new FileStream("myImage.xml", FileMode.Create);
+            holst.Serialize(writer, myIm.image_byte);
+            writer.Close();
+        }
+        public void OpenFromFile()
+        {
+            XmlSerializer holst = new XmlSerializer(typeof(byte[]));
+            Stream reader = new FileStream("myImage.xml", FileMode.Open);
+            myIm.image_byte = (byte[])holst.Deserialize(reader);
+            reader.Close();
+            myIm.bmp = byteArrayToBmp(myIm.image_byte);
+
+        }
+        private Bitmap byteArrayToBmp(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Bitmap returnbmp = new Bitmap(ms);
+            return returnbmp;
+        }
+
         private void fMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveInFile();
         }
 
+        public void PolEndDraw()
+        {
+            if (drPolProc)
+            {
+                drPolProc = false;
+                Pen pen = new Pen(curColor, thickness);
+                press = false;
+                Graphics g = Graphics.FromImage(pb.Image);
+                fig = new Poligon(ps, pen, pos1, pos2);
+                fig.mypen = pen;
+                fig.Draw(g);
+                myIm.figures.Add(fig);
+                pb.Refresh();
+                g.Save();
+            }
+        }
 
         private void pbHolst_MouseMove(object sender, MouseEventArgs e)
         {
