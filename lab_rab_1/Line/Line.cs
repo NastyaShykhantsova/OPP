@@ -18,7 +18,7 @@ namespace LineSpace
         }
         public override void Draw(Graphics g)
         {
-
+            g.DrawLine(mypen, pos1.X, pos1.Y, pos2.X, pos2.Y);
         }
     }
 }

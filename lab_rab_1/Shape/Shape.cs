@@ -21,6 +21,8 @@ namespace ShapeSpace
         }
         public virtual void Draw(Graphics g)
         {
+            height = Math.Abs(pos1.Y - pos2.Y);
+            g.DrawRectangle(mypen, Math.Min(pos1.X, pos2.X), Math.Min(pos1.Y, pos2.Y), height, height);
         }
     }
 }

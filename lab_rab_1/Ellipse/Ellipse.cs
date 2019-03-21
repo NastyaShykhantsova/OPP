@@ -15,7 +15,9 @@ namespace EllipseSpace
         { }
         public override void Draw(Graphics g)
         {
-
+            height = Math.Abs(pos1.Y - pos2.Y);
+            weight = Math.Abs(pos1.X - pos2.X);
+            g.DrawEllipse(mypen, Math.Min(pos1.X, pos2.X), Math.Min(pos1.Y, pos2.Y), weight, height);
         }
     }
 }

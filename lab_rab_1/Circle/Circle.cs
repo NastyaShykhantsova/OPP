@@ -17,7 +17,8 @@ namespace CircleSpace
         }
         public override void Draw(Graphics g)
         {
-
+            height = Math.Abs(pos1.Y - pos2.Y);
+            g.DrawEllipse(mypen, Math.Min(pos1.X, pos2.X), Math.Min(pos1.Y, pos2.Y), height, height);
         }
     }
 }
