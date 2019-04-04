@@ -20,21 +20,20 @@ using ShapeSpace;
 using SquareSpace;
 
 
-namespace lab_rab_1
+namespace lab_rab_1      //пространство имен
 {
     public partial class fMain : Form
     {
         
         public PictureBox pb;
-        
         public Shape fig;
         public int thickness = 2; //толщина
         public bool drLine, drRect, drCir, drEll, drSqu, drPol, drPolProc, drPolEnd, press;
         public Button curb;
         
-        public Point pos1, pos2;
+        public Point pos1, pos2;    //координаты
         public Color curColor;
-        public List<Point> ps;
+        public List<Point> ps;       //список
         MyImage myIm = new MyImage();
 
         public fMain()
@@ -51,8 +50,6 @@ namespace lab_rab_1
             {
                 curb.BackColor = SystemColors.Control;
             }
-            FigFalse();
-            drLine = true;
             FigFalse();
             drLine = true;
             bLine.BackColor = Color.Tomato;
@@ -124,15 +121,15 @@ namespace lab_rab_1
             curb = bCircle;
         }
 
-        private void pbHolst_MouseUp(object sender, MouseEventArgs e)
+        private void pbHolst_MouseUp(object sender, MouseEventArgs e)   
         {
-            if ((fig != null) && (!drPolProc) && (!drPolEnd))
+            if ((fig != null) && (!drPolProc) && (!drPolEnd))      //
             {
                 Pen pen = new Pen(curColor, thickness);
                 press = false;
                 Graphics g = Graphics.FromImage(myIm.bmp);
                 g.DrawImage(myIm.bmp, 0, 0);
-                g.DrawImage(myIm.bmp_2, 0, 0);
+                g.DrawImage(myIm.bmp_2, 0, 0);          ///
                 pb.Image = myIm.bmp;
             }
             if (drPolEnd)
@@ -166,7 +163,7 @@ namespace lab_rab_1
         private void cbThickness_SelectedIndexChanged(object sender, EventArgs e)
         {
             PolEndDraw();
-            thickness = Convert.ToInt32(cbThickness.Text);
+            thickness = Convert.ToInt32(cbThickness.Text);      
         }
 
         private void pbHolst_MouseDown(object sender, MouseEventArgs e)
@@ -198,7 +195,7 @@ namespace lab_rab_1
             }
             else if (drPolProc)
             {
-                if (((Math.Abs(ps[0].X - pos1.X) < 5) && (Math.Abs(ps[0].Y - pos1.Y) < 5) && (ps.Count > 1)))
+                if (((Math.Abs(ps[0].X - pos1.X) < 5) && (Math.Abs(ps[0].Y - pos1.Y) < 5) && (ps.Count > 1)))     // 
                 {
                     ps.Add(ps[0]);
                     drPolProc = false;
@@ -249,7 +246,7 @@ namespace lab_rab_1
         public void OpenFromFile()
         {
             XmlSerializer holst = new XmlSerializer(typeof(byte[]));
-            Stream reader = new FileStream("myImage.xml", FileMode.Open);
+            Stream reader = new FileStream("myImage.xml", FileMode.Open);  //представляет байтовый поток и является базовым для всех остальных классов потоков
             myIm.image_byte = (byte[])holst.Deserialize(reader);
             reader.Close();
             myIm.bmp = byteArrayToBmp(myIm.image_byte);
@@ -257,7 +254,7 @@ namespace lab_rab_1
         }
         private Bitmap byteArrayToBmp(byte[] byteArrayIn)
         {
-            MemoryStream ms = new MemoryStream(byteArrayIn);
+            MemoryStream ms = new MemoryStream(byteArrayIn);  //запись содержимого потока памяти в другой поток
             Bitmap returnbmp = new Bitmap(ms);
             return returnbmp;
         }
@@ -320,11 +317,12 @@ namespace lab_rab_1
     [Serializable]
     public class MyImage
     {
-
-    }
+    public MyImage(){}
     [NonSerialized]
     public List<Shape> figures;
     [NonSerialized]
     public Bitmap bmp, bmp_2;
     public byte[] image_byte;
+    }
+    
 }
